@@ -1,0 +1,30 @@
+To check the installed Librealsense version:
+  g++ version_check.cpp -o version_check -lrealsense2
+  ./version_check
+
+To check ros-wrapper version for Librealsense:
+  cd src/realsense-ros/
+  git describe --tags
+
+build docker with:
+  docker build -t my_ssl_slam .
+
+  
+bu goruntu problemini cozuyor(dockeri baslatmadan once kullan):
+  xhost +local:root
+
+run docker with:
+  docker run -it \
+     --privileged \
+     --device=/dev/bus/usb \
+     --device-cgroup-rule='c 81:* rmw' \
+     --device-cgroup-rule='c 189:* rmw' \
+     -e DISPLAY=$DISPLAY \
+     -e QT_X11_NO_MITSHM=1 \
+     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+     -v /dev:/dev \
+     -v ~/Downloads:/root/Downloads \
+     my_ssl_slam
+
+and run app:
+    roslaunch ssl_slam ssl_slam_L515.launch
